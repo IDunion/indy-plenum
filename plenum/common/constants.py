@@ -114,6 +114,7 @@ FORCE = 'force'
 AML_VERSION = 'version'
 AML = 'aml'
 AML_CONTEXT = 'amlContext'
+DIDDOC_CONTENT = 'diddoc_content'
 
 AUDIT_TXN_VIEW_NO = "viewNo"
 AUDIT_TXN_PP_SEQ_NO = "ppSeqNo"

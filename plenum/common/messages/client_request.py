@@ -1,6 +1,6 @@
 from plenum import PLUGIN_CLIENT_REQUEST_FIELDS
 from plenum.common.constants import NODE_IP, NODE_PORT, CLIENT_IP, \
-    CLIENT_PORT, ALIAS, SERVICES, TXN_TYPE, DATA, \
+    CLIENT_PORT, ALIAS, SERVICES, TXN_TYPE, DATA, DIDDOC_CONTENT, \
     TARGET_NYM, VERKEY, ROLE, NODE, NYM, GET_TXN, VALIDATOR, BLS_KEY, \
     OPERATION_SCHEMA_IS_STRICT, BLS_KEY_PROOF, TXN_AUTHOR_AGREEMENT, TXN_AUTHOR_AGREEMENT_TEXT, \
     TXN_AUTHOR_AGREEMENT_AML, AML, AML_CONTEXT, AML_VERSION, \
@@ -14,13 +14,14 @@ from plenum.common.messages.fields import NetworkIpAddressField, \
     RoleField, TxnSeqNoField, IdentifierField, \
     NonNegativeNumberField, SignatureField, MapField, LimitedLengthStringField, \
     ProtocolVersionField, LedgerIdField, Base58Field, \
-    Sha256HexField, TimestampField, AnyMapField, NonEmptyStringField, BooleanField, IntegerField
+    Sha256HexField, TimestampField, AnyMapField, NonEmptyStringField, BooleanField, IntegerField, \
+    JsonField
 from plenum.common.messages.message_base import MessageValidator
 from plenum.common.types import OPERATION, f
 from plenum.config import ALIAS_FIELD_LIMIT, DIGEST_FIELD_LIMIT, \
     SIGNATURE_FIELD_LIMIT, TXN_AUTHOR_AGREEMENT_VERSION_SIZE_LIMIT, TXN_AUTHOR_AGREEMENT_TEXT_SIZE_LIMIT, \
     TAA_ACCEPTANCE_MECHANISM_FIELD_LIMIT, TXN_AUTHOR_AGREEMENT_AML_CONTEXT_LIMIT, \
-    TXN_AUTHOR_AGREEMENT_AML_VERSION_SIZE_LIMIT
+    TXN_AUTHOR_AGREEMENT_AML_VERSION_SIZE_LIMIT, JSON_FIELD_LIMIT
 
 
 class ClientNodeOperationData(MessageValidator):
@@ -58,6 +59,7 @@ class ClientNYMOperation(MessageValidator):
         (ALIAS, LimitedLengthStringField(max_length=ALIAS_FIELD_LIMIT, optional=True)),
         (VERKEY, VerkeyField(optional=True, nullable=True)),
         (TARGET_NYM, DestNymField()),
+        (DIDDOC_CONTENT, JsonField(max_length=JSON_FIELD_LIMIT, optional=True)),
         (ROLE, RoleField(optional=True)),
         # TODO: validate role using ChooseField,
         # do roles list expandable form outer context
